@@ -1,0 +1,272 @@
+/*created by: team8
+19/11/2019
+13:30*/
+
+.H files
+
+#pragma once
+#include<iostream>
+#include"string.h"
+#include <string>
+
+class employee {
+protected:
+	char* name;
+	int salary;//luong tieu chuan
+	int hours;//gio lam
+public:
+	employee();
+	employee(const char* name_, int salary_);
+	~employee();
+	void pay();
+	/*void setname(char*name_);*/
+	/*string getname();*/
+};
+/*====================================================================================*/
+#pragma once
+#include"employees.h"
+class director : public employee {
+public:
+	
+	director();
+	director(const char* name_, int salary_);
+	~director();
+	void sethours(int hours2);
+	void pay();
+	void do_work();
+};
+/*=====================================================================*/
+#pragma once
+#include"employees.h"
+class worker : public employee {
+private:
+	int level;
+public:
+	worker();
+	worker(const char* name1, int salary1,int level_);
+	void sethours(int hours1);
+	void pay();
+	void do_work();
+	~worker();
+};
+/*====================================================================*/
+#pragma once
+#include"employees.h"
+class manager :public employee {
+private:
+	int dept;
+public:
+	manager();
+	manager(const char* name_, int salary_);
+	~manager();
+	int hours;
+	void sethours(int hour3);
+	void setdept_(int dept_);
+	void pay();
+	void do_work();
+};
+/*==========================================================================*/
+
+
+.CPP files
+
+/*=====================================================================*/
+#include"employees.h"
+#include<iostream>
+#include<string>
+
+using  namespace std;
+
+employee::employee()
+{
+	cout << "the guy, who is looking at this screen, is so handsome :D" << endl;
+	name = NULL;
+	salary = 1000;
+	hours = 0;
+}
+
+employee::employee(const char* name_, int salary_)
+{
+	int n = strlen(name_);
+	name = new char[n + 1];
+	strcpy(name, name_);
+	salary = salary_;
+}
+
+employee::~employee()
+{
+	if (name != NULL) {
+		delete name;
+		salary = 0;
+	}
+}
+
+void employee::pay()
+{
+	cout<<name<<"'s salary this month: "<<salary*hours<<"VND"<<endl;
+}
+
+//void employee::setname(char* name_)
+//{
+//	name = name_;
+//}
+
+//string employee::getname()
+//{
+//	return name;
+//}
+/*=====================================================================*/
+#include "director.h"
+using namespace std;
+
+director::director() :employee()
+{
+	//empty
+}
+
+
+director::director(const char* name2, int salary2) :employee(name2, salary2)
+{
+	cout << "\ndirector site" << endl;
+}
+
+void director::sethours(int hour1)
+{
+	hours = hour1;
+}
+
+void director::pay()
+{
+	cout << "your salary this month: " << salary * hours << "VND" << endl;
+}
+
+void director::do_work()
+{
+	cout << "hi i'm a director haha" << endl;
+}
+
+director::~director()
+{
+	//empty
+}
+/*=====================================================================*/
+#include "manager.h"
+using namespace std;
+
+manager::manager() :employee()
+{
+	dept = 0;
+}
+
+
+manager::manager(const char* name3, int salary3) :employee(name3, salary3)
+{
+	cout << "\nmanager site" << endl;
+}
+
+void manager::sethours(int hour3)
+{
+	hours = hour3;
+}
+
+void manager::setdept_(int dept_)
+{
+	dept = dept_;
+}
+
+void manager::pay()
+{
+	cout << "dept: " <<dept<< "my salary this month: " << salary * hours << "VND" << endl;
+}
+
+void manager::do_work()
+{
+	cout << "hi i'm a manager \n"<<"don't tell the director that he's so smart hihi " << endl;
+}
+
+manager::~manager()
+{
+	if (dept != 0) {
+		dept = 0;
+	}
+}
+/*=====================================================================*/
+#include "worker.h"
+using namespace std;
+
+worker::worker():employee()
+{
+	level = 0;
+}
+
+
+worker::worker(const char* name1, int salary1, int level_):employee(name1,salary1)
+{
+	level = level_;
+}
+
+void worker::sethours(int hour3)
+{
+	hours = hour3;
+}
+
+void worker::pay()
+{
+	cout <<" " << "your salary this month: " << salary * hours * level << "VND" << endl;
+}
+
+void worker::do_work()
+{
+	cout << "\nhi i'm a worker huhu" << endl;
+}
+
+worker::~worker()
+{
+	if (level != 0) {
+		level = 0;
+	}
+}
+/*=====================================================================*/
+//static
+//constant methode
+//inheritance
+
+#include<iostream>
+#include<conio.h>
+#include<string>
+#include"employees.h"
+#include"director.h"
+#include"worker.h"
+#include"manager.h";
+
+using namespace std;
+
+void main() {
+	system("cls");
+	director d;
+	manager m;
+	worker w;
+	const char* name2 = "nam";
+	
+	//workers
+	w=worker::worker("Thinh",10000,2);
+	w.sethours(10);
+	w.do_work();
+	w.pay();
+	//manager
+	m =manager::manager("Hoang", 10000);
+	m.setdept_(0001);
+	m.sethours(12);
+	m.do_work();
+	m.pay();
+	//director
+	d = director::director("Nam", 1000000);
+	d.sethours(69);
+	d.do_work();
+	d.pay();
+	/*employee e = d;
+	e = employee::employee("Dang", 1000);
+	e.pay();*/
+	_getch();
+}
+//enddddddddddddddddddddddddddddddddddddddddd
